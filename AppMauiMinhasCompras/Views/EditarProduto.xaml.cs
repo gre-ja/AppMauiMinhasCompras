@@ -14,18 +14,20 @@ public partial class EditarProduto : ContentPage
         try
         {
             Produto produto_anexado = BindingContext as Produto;
+            //BindingContext é o elemento que fornece os dados que a tela irá usar
+            //no caso acima o BindingContext pega o produto que está selecionado p/editar
 
             Produto p = new Produto
             {
-                Id = produto_anexado.Id,
-                Descricao = txt_descricao.Text, //definir propriedades
+                Id = produto_anexado.Id, //acesso ao que foi selecionado
+                Descricao = txt_descricao.Text, 
                 Quantidade = Convert.ToDouble(txt_quantidade.Text),
                 Preco = Convert.ToDouble(txt_preco.Text)
             };
 
-            await App.Db.Update(p);//classe app - dentro do Db tem as operações - selecionar - tabela
+            await App.Db.Update(p);//atualiza o sqlite
             await DisplayAlert("Sucesso!", "Registro Atualizado", "OK");
-            await Navigation.PopAsync();
+            await Navigation.PopAsync();//retorna a página principal ao executar a tarefa
         }
         catch (Exception ex)
         {
